@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>angular-bsModal demo app</title>
+    
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    
+    <link rel="stylesheet" href="css/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="css/lib/default.css">
+    
+    <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/lib/angular.js"></script>
+    <script type="text/javascript" src="js/lib/highlight.pack.js"></script>
+    <script src="../dist/angular-bsModal.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script> 
+  </head>
+  <body>
+    <div class="container" ng-app="Demo">
+      
+      <div class="page-header">
+        <h2>Demo angular-bsModal</h2>
+      </div>
+      
+      <!-- first example -->
+      <div ng-controller="firstExample">
+        <h3>Modal with description and confirm callback</h3>
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            This is simple modal with description and confirm function callback.
+            <p></p>
+          </div>
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <label>Example:</label>
+            <pre>
+              <code class="javascript">
+                bsModal.show({
+                  title       : 'First Modal Example',
+                  description : 'This is descripton in first modal example. Do You agreed?',
+                  confirmText : 'Yes!',
+                  confirm     : function() {
+                    bsModal.close();
+                  }     
+                });                  
+              </code>
+            </pre>
+          </div>
+        </div>
+        <button class="btn btn-primary" ng-click="showFirstExample()">Open Modal</button>       
+      </div>
+      <!-- /firs example -->
+      <hr>
+      <!-- second example -->
+      <div ng-controller="secondExample">
+        <h3>Modal with description and disable close button</h3>
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            This is simple modal with description and confirm function callback.
+            <p></p>
+          </div>
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <label>Example:</label>
+            <pre>
+              <code class="javascript">
+                bsModal.show({
+                  title       : 'Second Modal Example',
+                  description : 'This modal has no close button :)',
+                  confirmText : 'Yes!',
+                  close       : false,
+                  confirm     : function() {
+                    bsModal.close();
+                  }    
+                });                  
+              </code>
+            </pre>
+          </div>
+        </div>
+        <button class="btn btn-primary" ng-click="showSecondExample()">Open Modal</button>       
+      </div>      
+      <!-- /second example -->
+      <hr>
+      <!-- third example -->
+      <div ng-controller="thirdExample">
+        <h3>Change width and background color</h3>
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            Add "width" and "color" to injected object in bsModal to change width and/or background.<br>
+            <label>Tip:</label>
+            To maintain responsiveness set width always in percent. 
+            <p></p>
+          </div>
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <label>Example:</label>
+            <pre>
+              <code class="javascript">
+                bsModal.show({
+                  title       : 'Change the width and background',
+                  description : 'Modal with 90% width and pink backgorund',
+                  width       : '90%',
+                  background  : '#ff80ab',
+                  confirmText : 'Cool',
+                  confirm     : function() {
+                    bsModal.close();
+                  }    
+                });                  
+              </code>
+            </pre>
+          </div>
+        </div>
+        <button class="btn btn-primary" ng-click="showThirdExample()">Open Modal</button>       
+      </div>      
+      <!-- /third example -->
+      <hr>
+      <!-- third example -->
+      <div ng-controller="templateExample">
+        <h3>Modal with template</h3>
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            To load template into modal windows just add 'template' and path to html file<br>
+            <p></p>
+          </div>
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <label>Example:</label>
+            <pre>
+              <code class="javascript">
+                bsModal.show({
+                  title       : 'Modal with template',
+                  template    : '../demo/modal_template/tmp.html',
+                  controller  : 'modalController',
+                  confirmText : 'Ok',
+                  confirm     : function() {
+                    bsModal.close();
+                  }    
+                });                  
+              </code>
+            </pre>
+          </div>
+        </div>
+        <button class="btn btn-primary" ng-click="showTemplateExample()">Open Modal</button>       
+      </div>      
+      <!-- /third example -->      
+    </div>
+    
+    <div class="container" id="demo-provider">
+      <!-- setting default options example -->
+      <div ng-controller="defaultController">
+        <h3>Setting default options</h3>
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            You can set default options that will be used in each modal window. To do so, pass the default settings to bsModalProvider.<br>
+            <p></p>
+          </div>
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <label>Example:</label>
+            <pre>
+              <code class="javascript">
+                angular.module('DemoProvider', ['angular-bsModal'])
+                  .config(['bsModalProvider', function(bsModalProvider) {
+                    // set the provider
+                    bsModalProvider.setDefault({
+                      title       : 'Default title',
+                      description : 'This is default description',
+                      width       : '20%'
+                    }); 
+                  }])
+                  .controller('defaultController', defaultController);
+                
+                // and now in the controller  
+                function defaultController($scope, bsModal) {
+                  $scope.showModal = function() {
+                    bsModal.show({
+                      confirmText : 'Ok!',
+                      confirm     : function() {
+                        bsModal.close();
+                      } 
+                    });      
+                  };
+                };                  
+              </code>
+            </pre>
+          </div>
+        </div>
+        <button class="btn btn-primary" ng-click="showModal()">Open Modal</button>       
+      </div>      
+      <!-- /setting default options example -->
+      
+      <!-- aliases example -->
+      <div ng-controller="aliasController">
+        <h3>Set alias</h3>
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            You can set multiple aliases to call them by name. To do this, create an alias using the method of " createAlias ​​()" with provider<br>
+            <p></p>
+          </div>
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <label>Example:</label>
+            <pre>
+              <code class="javascript">
+                angular.module('DemoProvider', ['angular-bsModal'])
+                  .config(['bsModalProvider', function(bsModalProvider) {
+                    // set the provider
+                    bsModalProvider.createAlias('sessionExpired', {
+                      title       : 'Session expired!',
+                      description : 'Your session has expired. Please login again',
+                      width       : '20%',
+                      close       : false,
+                      confirmText : 'Go to login page',
+                      confirm     : function() {
+                        bsModalProvider.close();
+                      }
+                    }) 
+                  }])
+                  .controller('aliasController', aliasController)
+
+                // and now controller
+                function aliasController($scope, bsModal) {
+                  $scope.showAliasModal = function() {
+                    bsModal.showAs('sessionExpired');  
+                  };  
+                };                 
+              </code>
+            </pre>
+          </div>
+        </div>
+        <button class="btn btn-primary" ng-click="showAliasModal()">Open Modal</button>       
+      </div>      
+      <!-- /aliases example -->             
+    </div>
+    
+    <footer>
+      <div class="container">
+        <hr>
+        Github: <a href="https://github.com/ddosdor/angular-bsModal">https://github.com/ddosdor/angular-bsModal</a> 
+      </div>
+    </footer>
+  <script src="js/main.js"></script>   
+  </body>
+</html>
