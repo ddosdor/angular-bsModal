@@ -123,14 +123,24 @@ angular.module('angular-bsModal', [])
           close : function() {
             angular.element('.modal').modal('hide');  
           },
-          showAs : function(name) {
+          showAs : function(name, options) {
             var name = name,
                 alias = aliases.filter(function(obj) {
                   return obj.name === name;
-                })[0];
-                         
+                })[0],
+                _options = {};
+             
             if(alias) {
-              this.show(alias.options);
+              angular.copy(alias.options, _options)
+              if(typeof options != 'undefined') {
+                angular.forEach(alias.options, function(value, key) {
+                  if(key in options) {
+                    _options[key] = options[key]   
+                  }
+                });
+              };
+                           
+              this.show(_options);
             } else {
               console.error('bsModal error - alias: "' + name + '" does not exist');
             }
@@ -138,4 +148,3 @@ angular.module('angular-bsModal', [])
         }; 
       }]};          
 })
-

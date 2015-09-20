@@ -192,6 +192,7 @@
         <div class="row">
           <div class="col-md-12 col-sm-12 col-xs-12">
             You can set multiple aliases to call them by name. To do this, create an alias using the method of " createAlias ​​()" with provider<br>
+            Second argument in showAs() method is optional. When You want change some defined option simply add second argument with options object<br>
             <p></p>
           </div>
           <div class="col-md-12 col-sm-12 col-xs-12">
@@ -201,6 +202,12 @@
                 angular.module('DemoProvider', ['angular-bsModal'])
                   .config(['bsModalProvider', function(bsModalProvider) {
                     // set the provider
+                    bsModalProvider.setDefault({
+                      title       : 'Default title',
+                      description : 'This is default description',
+                      width       : '20%'
+                    });
+                    
                     bsModalProvider.createAlias('sessionExpired', {
                       title       : 'Session expired!',
                       description : 'Your session has expired. Please login again',
@@ -213,18 +220,25 @@
                     }) 
                   }])
                   .controller('aliasController', aliasController)
-
-                // and now controller
+                
+                // and now in the controller              
                 function aliasController($scope, bsModal) {
                   $scope.showAliasModal = function() {
                     bsModal.showAs('sessionExpired');  
+                  };
+                  
+                  $scope.showAliasModalWithDescription = function() {
+                    bsModal.showAs('sessionExpired', {
+                      description : 'Description from controller'
+                    });  
                   };  
                 };                 
               </code>
             </pre>
           </div>
         </div>
-        <button class="btn btn-primary" ng-click="showAliasModal()">Open Modal</button>       
+        <button class="btn btn-primary" ng-click="showAliasModal()">Open Modal 1</button>
+        <button class="btn btn-primary" ng-click="showAliasModalWithDescription()">Open Modal 2</button>       
       </div>      
       <!-- /aliases example -->             
     </div>

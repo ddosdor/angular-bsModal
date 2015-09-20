@@ -102,6 +102,12 @@
   function aliasController($scope, bsModal) {
     $scope.showAliasModal = function() {
       bsModal.showAs('sessionExpired');  
+    };
+    
+    $scope.showAliasModalWithDescription = function() {
+      bsModal.showAs('sessionExpired', {
+        description : 'Description from controller'
+      });  
     };  
   };
   
